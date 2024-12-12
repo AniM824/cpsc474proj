@@ -1,8 +1,13 @@
 import random
+import sys
 
-my_file = open("words.txt", "r") 
+my_file = open("small_vocab.txt", "r") 
 data = my_file.read() 
-words_list = data.split("\n") 
+small_vocab = data.split("\n") 
+
+my_file = open("large_vocab.txt", "r") 
+data = my_file.read() 
+large_vocab = data.split("\n") 
 
 def generate_feedback(guess, target):
     feedback = ["","","","",""]
@@ -27,42 +32,39 @@ def generate_feedback(guess, target):
     return feedback
 
 
-def play_game():
+def play_game(words_list, large):
     feedback_history = []
     res = [None, None]
 
     target_list = words_list
     answer1 = random.choice(words_list)
     answer2 = random.choice(words_list)
-    # print("ans: " + answer1)
-    # print("ans: " + answer2)
-    for i in range(7):
-        print("guess " + str(i + 1))
+    print("ans: " + answer1)
+    print("ans: " + answer2)
+    for i in range(100):
+        # print("guess " + str(i + 1))
         guess_map = {}
         for guess in target_list:
-
-            # iter1 = None
-            # iter2 = None
-            # if 1000 < len(target_list):
-            #     iter1 = random.sample(target_list, 1000)
-            #     iter2 = random.sample(target_list, 1000)
-            # else:
-            #     iter1 = target_list
-            #     iter2 = target_list
+            iter1 = target_list
+            iter2 = target_list
+            if large and 1000 < len(target_list):
+                iter1 = random.sample(target_list, 1000)
+                iter2 = random.sample(target_list, 1000)
 
 
+            freq_map1 = {}
             if res[0] == None:
-                freq_map1 = {}
-                for target1 in target_list:
+                for target1 in iter1:
                     feedback1 = tuple(generate_feedback(guess, target1))
                     if feedback1 in freq_map1.keys():
                         freq_map1[feedback1] = freq_map1[feedback1] + 1
                     else:
                         freq_map1[feedback1] = 1
 
+
+            freq_map2 = {}
             if res[1] == None:
-                freq_map2 = {}
-                for target2 in target_list:
+                for target2 in iter2:
                     feedback2 = tuple(generate_feedback(guess, target2))
                     if feedback2 in freq_map2.keys():
                         freq_map2[feedback2] = freq_map2[feedback2] + 1
@@ -80,7 +82,7 @@ def play_game():
 
             
         best_guess = min(guess_map, key=guess_map.get)
-        # print("turn " + str(i + 1) + " " + best_guess)
+        print("turn " + str(i + 1) + " " + best_guess)
 
         if best_guess == answer1:
             # print("FINISHED WORD 1 IN " + str(i + 1) + " TURNS")
@@ -114,19 +116,22 @@ def play_game():
 
 
 def main():
+    print(sys.argv)
+    if len(sys.argv) > 1 and sys.argv[1] == "--large":
+        print("A")
+        play_game(large_vocab, True)
+    else:
+        print("b")
+        play_game(small_vocab, False)
+    # results = []
+    # for i in range(20):
+    #     print("finished " + str(i))
+    #     results.append(play_game())
 
-    # print(play_game())
-
-    # play_game()
-    results = []
-    for i in range(20):
-        print("finished " + str(i))
-        results.append(play_game())
-
-    print(sum(results) / 20)
-    print(max(results))
-    print(results.count(max(results)))
-    print(results)
+    # print(sum(results) / 20)
+    # print(max(results))
+    # print(results.count(max(results)))
+    # print(results)
     # print(generate_feedback('gooey', 'hippo'))
 
 main()
