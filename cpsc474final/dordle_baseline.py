@@ -1,8 +1,13 @@
+import sys
 import random
 
-my_file = open("words.txt", "r") 
+my_file = open("small_vocab.txt", "r") 
 data = my_file.read() 
-words_list = data.split("\n") 
+small_vocab = data.split("\n") 
+
+my_file = open("large_vocab.txt", "r") 
+data = my_file.read() 
+large_vocab = data.split("\n") 
 
 def generate_feedback(guess, target):
     feedback = ["","","","",""]
@@ -27,16 +32,19 @@ def generate_feedback(guess, target):
     return feedback
 
 
-def play_game():
+def play_game(words_list):
     feedback_history = []
     res = [None, None]
 
     target_list = words_list
+    # answer1 = "louse"
+    # answer2 = "pouke"
     answer1 = random.choice(words_list)
     answer2 = random.choice(words_list)
     # print("ans: " + answer1)
     # print("ans: " + answer2)
-    for i in range(7):
+    for i in range(100):
+        # print(i)
         best_guess = random.choice(target_list)
         # print("turn " + str(i + 1) + " " + best_guess)
 
@@ -67,21 +75,24 @@ def play_game():
                     target_list.append(target)
 
 
-
-    return 8
+    print("um")
+    return 100
 
 
 def main():
+    if len(sys.argv) > 1 and sys.argv[1] == "--large":
+        print("BASE STRAT. LARGE VOCAB.")
+        words_list = large_vocab
+    else:
+        print("BASE STRAT. SMALL VOCAB.")
+        words_list = small_vocab
 
-    # print(play_game())
-
-    play_game()
     results = []
-    for i in range(1000):
+    for i in range(100):
         print("finished " + str(i))
-        results.append(play_game())
+        results.append(play_game(words_list))
 
-    print(sum(results) / 1000)
+    print(sum(results) / 100)
     print(max(results))
     print(results.count(max(results)))
     print(results)

@@ -39,8 +39,8 @@ def play_game(words_list, large):
     target_list = words_list
     answer1 = random.choice(words_list)
     answer2 = random.choice(words_list)
-    print("ans: " + answer1)
-    print("ans: " + answer2)
+    # print("ans: " + answer1)
+    # print("ans: " + answer2)
     for i in range(100):
         # print("guess " + str(i + 1))
         guess_map = {}
@@ -95,7 +95,7 @@ def play_game(words_list, large):
             max_value = max(freq_map.values())
             guess_map[guess] = max_value
         best_guess = min(guess_map, key=guess_map.get)
-        print("turn " + str(i + 1) + " " + best_guess)
+        # print("turn " + str(i + 1) + " " + best_guess)
 
         if best_guess == answer1:
             # print("FINISHED WORD 1 IN " + str(i + 1) + " TURNS")
@@ -125,26 +125,34 @@ def play_game(words_list, large):
 
 
 
-    return 11
+    return 100
 
 
 def main():
     print(sys.argv)
     if len(sys.argv) > 1 and sys.argv[1] == "--large":
-        print("A")
-        play_game(large_vocab, True)
+        print("STRAT ONE. LARGE VOCAB.")
+        large = True
+        words_list = large_vocab
     else:
-        print("b")
-        play_game(small_vocab, False)
-    # results = []
-    # for i in range(20):
-    #     print("finished " + str(i))
-    #     results.append(play_game())
+        print("STRAT ONE. SMALL VOCAB.")
+        large = False
+        words_list = small_vocab
+    # if len(sys.argv) > 1 and sys.argv[1] == "--large":
+    #     print("A")
+    #     play_game(large_vocab, True)
+    # else:
+    #     print("b")
+    #     play_game(small_vocab, False)
+    results = []
+    for i in range(100):
+        print("finished " + str(i))
+        results.append(play_game(words_list, large))
 
-    # print(sum(results) / 20)
-    # print(max(results))
-    # print(results.count(max(results)))
-    # print(results)
+    print(sum(results) / 100)
+    print(max(results))
+    print(results.count(max(results)))
+    print(results)
     # print(generate_feedback('gooey', 'hippo'))
 
 main()
