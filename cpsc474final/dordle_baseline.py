@@ -36,6 +36,8 @@ def play_game(words_list):
     feedback_history = []
     res = [None, None]
 
+    guesses = []
+
     target_list = words_list
     # answer1 = "louse"
     # answer2 = "pouke"
@@ -56,7 +58,11 @@ def play_game(words_list):
             # print("FINISHED WORD 2 IN " + str(i + 1) + " TURNS")
             res[1] = i + 1
 
+        guesses.append(best_guess)
+
         if res[0] != None and res[1] != None:
+            print("Answers: ", [answer1, answer2])
+            print("Guesses: ", guesses)
             # print("COMPLETED")
             return i + 1
 
@@ -87,6 +93,6 @@ def main():
     else:
         words_list = small_vocab
 
-    print(play_game(words_list))
+    print(str(play_game(words_list)) + " Turns to Compete")
 
 main()

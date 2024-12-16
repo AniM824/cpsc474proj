@@ -35,6 +35,7 @@ def generate_feedback(guess, target):
 def play_game(words_list, large):
     feedback_history = []
     res = [None, None]
+    guesses = []
 
     target_list = words_list
     answer1 = random.choice(words_list)
@@ -92,8 +93,11 @@ def play_game(words_list, large):
             # print("FINISHED WORD 2 IN " + str(i + 1) + " TURNS")
             res[1] = i + 1
 
+        guesses.append(best_guess)
+
         if res[0] != None and res[1] != None:
-            # print("COMPLETED")
+            print("Answers: ", [answer1, answer2])
+            print("Guesses: ", guesses)
             return i + 1
 
         feedback1 = generate_feedback(best_guess, answer1)
@@ -122,6 +126,6 @@ def main():
         large = False
         words_list = small_vocab
 
-    print(play_game(words_list, large))
+    print(str(play_game(words_list, large)) + " Turns to Compete")
 
 main()
