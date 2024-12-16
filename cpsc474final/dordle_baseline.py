@@ -65,7 +65,7 @@ def play_game(words_list):
 
         feedback_history.append([feedback1,feedback2])
 
-        temp_list = target_list
+        temp_list = set(target_list)
         target_list = []
         for target in temp_list:
             for pair in feedback_history:
@@ -74,28 +74,19 @@ def play_game(words_list):
                 if res[1] is None and generate_feedback(best_guess, target) == pair[1]:
                     target_list.append(target)
 
+        # print(len(target_list))
 
-    print("um")
+
+    # print("um")
     return 100
 
 
 def main():
     if len(sys.argv) > 1 and sys.argv[1] == "--large":
-        print("BASE STRAT. LARGE VOCAB.")
         words_list = large_vocab
     else:
-        print("BASE STRAT. SMALL VOCAB.")
         words_list = small_vocab
 
-    results = []
-    for i in range(100):
-        print("finished " + str(i))
-        results.append(play_game(words_list))
-
-    print(sum(results) / 100)
-    print(max(results))
-    print(results.count(max(results)))
-    print(results)
-    # print(generate_feedback('gooey', 'hippo'))
+    print(play_game(words_list))
 
 main()

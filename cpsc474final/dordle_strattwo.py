@@ -101,7 +101,7 @@ def play_game(words_list, large):
 
         feedback_history.append([feedback1,feedback2])
 
-        temp_list = target_list
+        temp_list = set(target_list)
         target_list = []
         for target in temp_list:
             for pair in feedback_history:
@@ -115,30 +115,13 @@ def play_game(words_list, large):
 
 
 def main():
-    print(sys.argv)
     if len(sys.argv) > 1 and sys.argv[1] == "--large":
-        print("STRAT TWO. LARGE VOCAB.")
         large = True
         words_list = large_vocab
     else:
-        print("STRAT TWO. SMALL VOCAB.")
         large = False
         words_list = small_vocab
-    # if len(sys.argv) > 1 and sys.argv[1] == "--large":
-    #     print("A")
-    #     play_game(large_vocab, True)
-    # else:
-    #     print("b")
-    #     play_game(small_vocab, False)
-    results = []
-    for i in range(100):
-        print("finished " + str(i))
-        results.append(play_game(words_list, large))
 
-    print(sum(results) / 100)
-    print(max(results))
-    print(results.count(max(results)))
-    print(results)
-    # print(generate_feedback('gooey', 'hippo'))
+    print(play_game(words_list, large))
 
 main()
